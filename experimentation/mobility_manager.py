@@ -36,6 +36,29 @@ class MobilityManager:
 		att_str = self.attributes[str(attribute)]
 		return self.country_sets[country][att_str]
 
+	def get_rolling_mean(self, country, attribute, windows):
+		att = self.get_attribute(country, attribute)
+
+		rolling_mean = att.rolling(window=windows).mean()
+
+		return rolling_mean 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
