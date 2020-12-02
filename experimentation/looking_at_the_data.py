@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import mobility_manager as mm
+from line_plotter import LinePlot
 
 def get_dataset(f):
 	return pd.read_csv("./datasets/{}".format(f))
@@ -18,10 +19,15 @@ germany_set = get_dataset(germany_file)
 mobility_manager = mm.MobilityManager(austria_set, 
 	belgium_set, germany_set, austria_set.columns)
 
-att = mobility_manager.get_attribute(mm.Country.Belgium,
+
+dates = mobility_manager.get_attribute(mm.Country.Belgium,
+	mm.Attribute.Date)
+
+retail = mobility_manager.get_attribute(mm.Country.Belgium,
 	mm.Attribute.Retail_And_Rec)
 
-print(att)
+plot = LinePlot().create(dates, retail)
+plot.show()
 
 
 

@@ -8,12 +8,13 @@ class Country(enum.IntEnum):
 class Attribute(enum.IntEnum):
 	ID = 0,
 	Country = 1,
-	Retail_And_Rec = 2,
-	Grocery_And_Pharma = 3,
-	Parks = 4,
-	Transit = 5,
-	Workplaces = 6,
-	Residential = 7
+	Date = 2,
+	Retail_And_Rec = 3,
+	Grocery_And_Pharma = 4,
+	Parks = 5,
+	Transit = 6,
+	Workplaces = 7,
+	Residential = 8
 
 
 class MobilityManager:
