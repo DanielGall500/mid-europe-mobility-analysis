@@ -26,7 +26,16 @@ dates = mobility_manager.get_attribute(mm.Country.Belgium,
 retail = mobility_manager.get_attribute(mm.Country.Belgium,
 	mm.Attribute.Retail_And_Rec)
 
-plot = LinePlot().create(dates, retail)
+belgium_preferences = {
+	"title" : "Belgium Line Plot",
+	"x_title" : "Date",
+	"y_title" : "Attribute"
+}
+
+
+plot = LinePlot()
+plot.add_data(dates, retail)
+plot.add_prefs(belgium_preferences)
 plot.show()
 
 
