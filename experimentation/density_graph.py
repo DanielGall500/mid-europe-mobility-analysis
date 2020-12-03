@@ -1,10 +1,7 @@
-from line_plotter import LinePlot
+from graph import Graph
 import plotly.graph_objects as go
-from transformer import Transformer
-from mobility_manager import MobilityManager
 
-
-class DensityPlot(LinePlot):
+class DensityPlot(Graph):
 
 	def add_data(self, country, attribute, windows):
 		manager = super().mobility
@@ -17,8 +14,8 @@ class DensityPlot(LinePlot):
 		line = go.Scatter(x=dates,y=roll_mean, fill='tozeroy')
 
 		#Call Back To Inherited Class
-		super().fig.add_trace(line)
-		return super().fig
+		super().figure.add_trace(line)
+		return super().figure
 
 
 
