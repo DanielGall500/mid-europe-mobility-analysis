@@ -65,7 +65,11 @@ class MobilityManager:
 		dates = self.get_attribute(country, Attribute.Date)
 		y = self.get_attribute(country, attribute)
 
-		return self.transformer.get_resample(dates, att)
+		return self.transformer.get_resample(dates, y, rule)
+
+	def get_difference(self, country, attribute, periods):
+		return self.transformer.get_difference(y, periods)
+
 
 
 

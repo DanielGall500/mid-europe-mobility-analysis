@@ -1,9 +1,13 @@
 import pandas as pd
+import sys 
 
 class Transformer:
 
 	def __init__(self):
 		return
+
+	def get_diff(self, target, periods):
+		return target.diff(periods=periods)
 
 	def get_rolling_mean(self, dates, y, windows):
 		#Combine Two Attributes
@@ -33,4 +37,4 @@ class Transformer:
 
 		#Resample our data
 		resample = df.target.resample(rule).mean()
-		return resample
+		return resample.index, resample.values
