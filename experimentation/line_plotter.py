@@ -1,8 +1,10 @@
 import plotly.graph_objects as go 
+from mobility_manager import MobilityManager
 
 class LinePlot:
 
 	fig = go.Figure()
+	mobility = MobilityManager()
 
 	def __init__(self):
 		return None

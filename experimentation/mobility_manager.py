@@ -1,6 +1,6 @@
 import enum
-import sys
 import pandas as pd
+from transformer import Transformer
 
 class Country(enum.IntEnum):
 	Belgium = 0,
@@ -18,20 +18,33 @@ class Attribute(enum.IntEnum):
 	Workplaces = 7,
 	Residential = 8
 
-
 class MobilityManager:
+
+	austria_file = "austria.csv"
+	belgium_file = "belgium.csv"
+	germany_file = "germany.csv"
+
+	transformer = Transformer()
 
 	country_sets = {}
 	attributes = {}
 
-	def __init__(self, austria_df, belgium_df, germany_df, attributes):
-		self.country_sets[Country.Austria] = austria_df
-		self.country_sets[Country.Belgium] = belgium_df
-		self.country_sets[Country.Germany] = germany_df
+	def __init__(self):
+		austria_set = self._load_dataset(self.austria_file)
+		belgium_set = self._load_dataset(self.belgium_file)
+		germany_set = self._load_dataset(self.germany_file)
+
+		self.country_sets[Country.Austria] = austria_set
+		self.country_sets[Country.Belgium] = belgium_set
+		self.country_sets[Country.Germany] = germany_set
 
 		#Save Each Attribute ID => String As Dictionary
+		attributes = austria_set.columns
 		for att_id, att_str in zip(Attribute, attributes):
 			self.attributes[str(att_id)] = att_str
+
+	def _load_dataset(self, f):
+		return pd.read_csv("./datasets/{}".format(f))
 
 	def get_set(self, country):
 		return self.country_sets[country]
@@ -42,31 +55,17 @@ class MobilityManager:
 		return self.country_sets[country][att_str]
 
 	def get_rolling_mean(self, country, attribute, windows):
-		att = self.get_attribute(country, attribute)
-		rolling_mean = att.rolling(window=windows).mean()
-		return rolling_mean
+		dates = self.get_attribute(country,Attribute.Date)
+		y = self.get_attribute(country, attribute)
+
+		return self.transformer.get_rolling_mean(dates, y, windows)
 
 	def get_resample(self, country, attribute, rule):
-
 		#Get our target resampling attribute and the date index
-		att = self.get_attribute(country, attribute)
-		index = self.get_attribute(country, Attribute.Date)
+		dates = self.get_attribute(country, Attribute.Date)
+		y = self.get_attribute(country, attribute)
 
-		data = {
-		"date" : index,
-		"target" : att
-		}
-
-		#Concatenate these two attributes
-		df = pd.concat(data,axis=1)
-
-		#Convert to correct format and set as string
-		df['date'] = pd.to_datetime(df.date, format='%Y-%m-%d')
-		df = df.set_index('date')
-
-		#Resample our data
-		resample = df.target.resample(rule).mean()
-		return resample
+		return self.transformer.get_resample(dates, att)
 
 
 
