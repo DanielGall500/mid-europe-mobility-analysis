@@ -10,16 +10,19 @@ import sys
 
 class MobilitySuite:
 
-	subplot_rows = 4
-	subplot_cols = 1
+	subplot_rows = None
+	subplot_cols = None
 
 	figure = None
 
 	data_manager = MobilityManager()
 
-	def __init__(self):
-		self.figure = make_subplots(rows = self.subplot_rows, 
-		cols = self.subplot_cols)
+	def __init__(self, rows, cols):
+		self.figure = make_subplots(rows = rows, 
+		cols = cols)
+
+		self.subplot_rows = rows
+		self.subplot_cols = cols
 
 	def get_plot_line(self, country, attribute):
 		#Retrieve Data
@@ -53,29 +56,31 @@ class MobilitySuite:
 		graph_resampled_bar = ResampledBar()
 		return graph_resampled_bar.plot(dates, target, rule)
 
+	def add_plots(self, plots):
+		for i in range(0, self.subplot_rows):
+			nxt_plot = plots[i]
+
+			self.figure.add_trace(nxt_plot, 
+				row=i+1, col=1)
+
+
 	def plot(self, country, attribute):
 		graph_line = self.get_plot_line(country, attribute)
-		self.figure.add_trace(graph_line,row=1,col=1)
 
 		num_windows = 20
 		graph_density = self.get_plot_density(country, 
 			attribute, num_windows)
-		self.figure.add_trace(graph_density, row=2, col=1)
 
 		rule = 'M'
 		graph_bar = self.get_plot_resampled_bar(country,
 			attribute, rule)
-		self.figure.add_trace(graph_bar, row=3, col=1)
 
+		self.add_plots([graph_line, graph_density, graph_bar])
+
+	def show(self):
 		self.figure.show()
 
 
-def main():
-	suite = MobilitySuite()
-	suite.plot(Country.Germany, Attribute.Retail_And_Rec)
-
-if __name__ == "__main__":
-	main()
 
 
 
