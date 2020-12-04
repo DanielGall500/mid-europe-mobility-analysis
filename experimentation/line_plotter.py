@@ -1,11 +1,14 @@
 from graph import Graph
 import plotly.graph_objects as go
+import numpy as np 
+import sys
 
 class LinePlot(Graph):
 
-	def add_data(self, x, y):
-		line = go.Scatter(x=x,y=y)
-		super().figure.add_trace(line)
-		return super().figure
+	def plot(self, dates, target):
+		decrease_target = np.multiply(target,-1)
+
+		line = go.Scatter(x=x,y=decrease_target)
+		return line
 
 

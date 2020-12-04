@@ -1,21 +1,22 @@
 from graph import Graph
 import plotly.graph_objects as go
+import numpy as np 
 
 class DensityPlot(Graph):
 
-	def add_data(self, country, attribute, windows):
-		manager = super().mobility
+	def plot(self, dates, target, windows):
+		transformer = super().transformer
 
 		#Retrieve Rolling Mean
-		dates, roll_mean = manager.get_rolling_mean(country, 
-			attribute, windows)
+		dates, roll_mean = transformer.get_rolling_mean(dates, 
+			target, windows)
+
+		decrease_roll_mean = np.multiply(roll_mean,-1)
 
 		#Ensure Density Is Filled In
-		line = go.Scatter(x=dates,y=roll_mean, fill='tozeroy')
+		fill = 'tozeroy'
+		return go.Scatter(x=dates,y=decrease_roll_mean, fill=fill)
 
-		#Call Back To Inherited Class
-		super().figure.add_trace(line)
-		return super().figure
 
 
 
