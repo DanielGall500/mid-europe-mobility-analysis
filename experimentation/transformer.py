@@ -1,3 +1,4 @@
+from standards import Country, Attribute
 import pandas as pd
 import sys 
 
@@ -6,8 +7,8 @@ class Transformer:
 	def __init__(self):
 		return
 
-	def get_diff(self, target, periods):
-		return target.diff(periods=periods)
+	def get_difference(self, y, periods):
+		return y.diff(periods=periods)
 
 	def get_rolling_mean(self, dates, y, windows):
 		#Combine Two Attributes
