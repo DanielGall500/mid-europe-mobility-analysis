@@ -3,7 +3,6 @@ from graph import Graph
 import numpy as np
 
 class ResampledBar(Graph):
-
 	def plot(self, country, attribute, rule):
 		#Retrieve Our Data
 		dates, target = super().transformer.get_resample(country, 
