@@ -5,7 +5,6 @@ from transformer import Transformer
 import sys
 
 class Graph:
-
 	transformer = Transformer()
 
 	def __init__(self):

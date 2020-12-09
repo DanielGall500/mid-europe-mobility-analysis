@@ -6,9 +6,11 @@ import sys
 class LinePlot(Graph):
 
 	def plot(self, dates, target):
-		decrease_target = np.multiply(target,-1)
+		#Represent The Decline In An Attribute
+		#target = np.multiply(target,-1)
 
-		line = go.Scatter(x=dates,y=decrease_target)
+		#Create Line Plot
+		line = go.Scatter(x=dates,y=target)
 		return line
 
 

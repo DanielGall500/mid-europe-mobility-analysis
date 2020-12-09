@@ -2,9 +2,10 @@ from suite import MobilitySuite
 from standards import Country,Attribute
 
 def main():
-	suite = MobilitySuite(3,1)
+	suite = MobilitySuite(1,1)
 
-	suite.plot(Country.Austria, Attribute.Transit)
+	suite.plot_corr(Country.Austria, Attribute.Retail_And_Rec, 
+		Attribute.Grocery_And_Pharma)
 
 	suite.show()
 
